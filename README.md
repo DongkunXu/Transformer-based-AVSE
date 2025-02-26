@@ -18,9 +18,6 @@ Welcome to the **AVSE Project**! 🚀 This project explores the use of `Transfor
 - **Technology Stack**: Deep Learning-based **Multimodal Fusion** for robust audio-visual learning. 🧠
 - **Ultimate Goal**: Improve speech clarity and optimize perceptual experience. 🎧
 
-### 📖 Version History
-For detailed version history and development logs, check 👉 [`VERSION_LOG.md`](VERSION_LOG.md)
-
 
 ---
 
@@ -33,6 +30,4 @@ For detailed version history and development logs, check 👉 [`VERSION_LOG.md`]
 - **技术框架**：基于 **深度学习** 的 **多模态融合** 🧠
 - **最终目标**：提升语音清晰度，优化语音感知体验 🎧
 
-### 📖 版本记录
-📜 关于详细的版本记录和开发日志，请参考 👉 [`VERSION_LOG.md`](VERSION_LOG.md)
 
