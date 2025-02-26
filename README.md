@@ -27,9 +27,19 @@ This video presents the enhanced audio output.
 
 ![Enhanced Audio](https://github.com/DongkunXu/Transformer-based-AVSE/blob/Develop/Audio_for_github/enhanced.mp4)
 
-https://github.com/DongkunXu/Transformer-based-AVSE/blob/Develop/Audio_for_github/enhanced.mp4
+# Transformer-based AVSE
 
-Audio_for_github/mixed.mp4
+## Enhanced Audio
+<video width="500" height="300" controls>
+  <source src="Audio_for_github/enhanced.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+## Mixed Audio
+<video width="500" height="300" controls>
+  <source src="Audio_for_github/mixed.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ---
 
