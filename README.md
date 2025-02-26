@@ -23,7 +23,7 @@ This video showcases the mixed audio, which includes both the target speech and 
 ![Mixed Audio](Audio_for_github/mixed.mp4)
 
 ### Enhanced Audio
-This video presents the enhanced audio output, where the background noise has been reduced to emphasize the target speech using the AVSE model.
+This video presents the enhanced audio output.
 
 ![Enhanced Audio](Audio_for_github/enhanced.mp4)
 
