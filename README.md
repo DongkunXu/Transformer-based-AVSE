@@ -25,7 +25,7 @@ This video showcases the mixed audio, which includes both the target speech and 
 ### Enhanced Audio
 This video presents the enhanced audio output.
 
-![Enhanced Audio](Audio_for_github/enhanced.mp4)
+![Enhanced Audio](https://github.com/DongkunXu/Transformer-based-AVSE/blob/Develop/Audio_for_github/enhanced.mp4)
 
 ---
 
