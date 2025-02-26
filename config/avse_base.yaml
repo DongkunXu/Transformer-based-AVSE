@@ -1,0 +1,91 @@
+data:
+  root_dir: "D:/AVSE_DataSet/DataSet/LRS3"
+  max_duration: 3.0
+  batch_size: 16  # 增加批量大小以更好地利用GPU
+  num_workers: 24
+  pin_memory: true
+  prefetch_factor: 2
+
+model:
+  # 视频编码器基础参数
+  video_channels: 256
+  landmark_hidden_dim: 256
+
+  # 面部关键点编码器参数
+  landmark_point_dim: 32
+  landmark_point_hidden: 64
+  landmark_num_heads: 4
+  landmark_dropout: 0.1
+
+  # 唇部编码器参数
+  lip_init_channels: 64
+  lip_mid_channels: 128
+  lip_kernel_size: [1, 3, 3]
+  lip_padding: [0, 1, 1]
+  lip_pool_size: [1, 2, 2]
+
+  # 时序处理器参数
+  temporal_num_heads: 4
+  temporal_kernel_sizes: [3, 5, 7]
+  temporal_dropout: 0.1
+
+  # Conformer块参数
+  conformer_expansion: 4
+  conformer_kernel_size: 31
+  conformer_num_heads: 8
+  conformer_dropout: 0.1
+
+  # 音频处理器参数
+  audio_channels: 256
+  audio_layers: 4
+  n_fft: 1024  # 512
+  hop_length: 64 # 128
+  win_length: 512
+
+  # 融合参数
+  fusion_dim: 512 # 256
+  fusion_heads: 4
+  fusion_expansion: 4
+  fusion_dropout: 0.1
+
+preprocess:
+  # 视频预处理
+  video_fps: 25
+  lip_size: [96, 96]
+  normalize_landmarks: true
+  max_frames: 75   # 3秒@25fps
+  enhance_contrast: true  # 启用对比度增强
+  contrast_factor: 1.5   # 对比度增强因子，可调整
+
+  # 音频预处理
+  sample_rate: 16000
+  max_duration: 3.0
+  n_fft: 512
+  hop_length: 128
+  win_length: 512
+  normalize_audio: True
+  audio_max_length: 48000  # 3秒@16kHz
+
+training:
+  num_epochs: 80
+  learning_rate: 0.001
+  weight_decay: 0.0005
+  gradient_clip: 1.0  # 从1.0增加到2.0，让优化更激进一些
+  precision: "bf16"
+  checkpoint_dir: "./checkpoints"
+  warmup_steps: 1000  # 添加预热步数
+
+loss:
+  # 主要使用SI-SNR损失
+  mag_loss_weight: 0.2    # 范围 0 ~ 5
+  phase_loss_weight: 0.1 # 范围 0 ~ 10
+  si_snr_weight: 1        # 范围 -20 ~ 20
+  noise_loss_weight: 2    # 范围 0-1
+  perc_loss_weight: 2.5     # 范围 -1 ~ 0 STOI
+  highF_loss_weight: 0.25  # 范围 0 ~ 20
+  # pesq_loss_weight: 0.5
+
+  # STFT参数 (只保留一组，简化计算)
+  fft_sizes: [512]
+  hop_sizes: [128]
+  win_lengths: [512]

@@ -1,0 +1,17 @@
+torch~=2.6.0+cu126
+numpy~=2.1.2
+torchaudio~=2.6.0+cu126
+torchvision~=0.21.0+cu126
+
+# 核心依赖
+torch  # 已安装带 CUDA 支持，假设无需再次列出版本
+torchaudio  # PyTorch 的音频处理库
+numpy  # 数值计算
+pytorch-lightning  # PyTorch Lightning 用于训练
+torchvision  # 提供 ResNet 等预训练模型
+pystoi  # 计算 STOI 感知损失
+tensorboard  # TensorBoard 日志支持
+
+# 可选依赖（根据需要添加）
+# matplotlib  # 如果需要绘图（代码中未直接使用，但可能用于调试）
+# scipy  # 如果后续需要额外的信号处理功能
