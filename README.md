@@ -30,15 +30,13 @@ This video presents the enhanced audio output.
 # Transformer-based AVSE
 
 ## Enhanced Audio
-<video width="500" height="300" controls>
+<video width="240" height="240" controls>
   <source src="Audio_for_github/enhanced.mp4" type="video/mp4">
-  Your browser does not support the video tag.
 </video>
 
 ## Mixed Audio
-<video width="500" height="300" controls>
+<video width="240" height="240" controls>
   <source src="Audio_for_github/mixed.mp4" type="video/mp4">
-  Your browser does not support the video tag.
 </video>
 
 ---
