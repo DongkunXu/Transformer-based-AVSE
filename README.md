@@ -1,4 +1,4 @@
-# 🎙️ Audio-Visual Speech Enhancement (AVSE) | 音频视觉语音增强
+# Audio-Visual Speech Enhancement (AVSE) | 音频视觉语音增强
 
 ## 📌 Table of Contents | 目录
 - [English Version](#-english-version) 🇬🇧
