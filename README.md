@@ -38,7 +38,7 @@ This video presents the enhanced audio output.
   <source src="Audio_for_github/mixed.mp4" type="video/mp4">
 </video>
 
-<video src='https://github.com/DongkunXu/Transformer-based-AVSE/blob/Develop/Audio_for_github/enhanced.mp4' width=180/>
+<video src='https://github.com/DongkunXu/Transformer-based-AVSE/blob/Develop/Audio_for_github/enhanced.mp4' width=180/>>
 
 
 ---
