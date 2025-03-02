@@ -13,14 +13,33 @@ from config.config import Config
 from models.avse_model import AVSEModel
 from data.data_module import AVSEDataModule
 from utils.monitor import DataFlowMonitor
+import yaml
+
+def save_config(config, save_path):
+    """Save the configuration to a YAML file"""
+    config_dict = {}
+    for section in ['data', 'model', 'training', 'preprocess', 'loss']:
+        section_config = getattr(config, section)
+        section_dict = vars(section_config)
+        # Filter out any special attributes
+        section_dict = {k: v for k, v in section_dict.items() if not k.startswith('_')}
+        config_dict[section] = section_dict
+
+    with open(save_path, 'w', encoding='utf-8') as f:
+        yaml.dump(config_dict, f, default_flow_style=False)
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str, required=True, help='Path to config file')
-    parser.add_argument('--exp_name', type=str, required=True, help='Experiment name')
+    parser.add_argument('--exp_name', type=str, default='experiment', help='Experiment name')
     parser.add_argument('--resume', type=str, help='Path to checkpoint for resuming')
     parser.add_argument('--monitor_samples', type=int, default=50,
                         help='Number of samples to monitor per epoch')
+    parser.add_argument('--root_dir', type=str, required=True, help='Root directory for dataset (overrides config)')
+    parser.add_argument('--batch_size', type=int, help='Batch size (overrides config)')
+    parser.add_argument('--num_workers', type=int, help='Number of data loader workers (overrides config)')
+    parser.add_argument('--prefetch_factor', type=int, help='Prefetch factor for data loader (overrides config)')
+
     return parser.parse_args()
 
 def main():
@@ -32,6 +51,17 @@ def main():
 
     # Load configuration
     config = Config.load(args.config)
+
+    # Override config values if specified in command-line arguments
+    if args.root_dir:
+        config.data.root_dir = args.root_dir
+    if args.batch_size:
+        config.data.batch_size = args.batch_size
+    if args.num_workers:
+        config.data.num_workers = args.num_workers
+    if args.prefetch_factor:
+        config.data.prefetch_factor = args.prefetch_factor
+
 
     # Set random seed
     pl.seed_everything(42)
@@ -45,6 +75,10 @@ def main():
 
     for dir_path in [checkpoint_dir, log_dir, monitor_dir]:
         dir_path.mkdir(parents=True, exist_ok=True)
+
+    # Save the configuration with any overrides applied
+    config_save_path = run_dir / 'config.yaml'
+    save_config(config, config_save_path)
 
     # Initialize monitor
     print("Initializing data flow monitor...")
