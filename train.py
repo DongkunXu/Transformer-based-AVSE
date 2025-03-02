@@ -40,6 +40,12 @@ def parse_args():
     parser.add_argument('--num_workers', type=int, required=True, help='Number of data loader workers (overrides config)')
     parser.add_argument('--prefetch_factor', type=int, required=True, help='Prefetch factor for data loader (overrides config)')
 
+    # 添加监控器启用/禁用的参数
+    parser.add_argument('--enable_monitor', action='store_true', help='Enable data flow monitoring')
+    parser.add_argument('--disable_monitor', action='store_false', dest='enable_monitor',
+                        help='Disable data flow monitoring')
+    parser.set_defaults(enable_monitor=False)  # 默认关闭监控器
+
     return parser.parse_args()
 
 def main():
@@ -80,12 +86,17 @@ def main():
     config_save_path = run_dir / 'config.yaml'
     save_config(config, config_save_path)
 
-    # Initialize monitor
+    # 初始化监控器
     print("Initializing data flow monitor...")
-    monitor = DataFlowMonitor(
-        root_dir=str(monitor_dir),
-        max_samples=args.monitor_samples
-    )
+    if args.enable_monitor:
+        monitor = DataFlowMonitor(
+            root_dir=str(monitor_dir),
+            max_samples=args.monitor_samples
+        )
+        print("Data flow monitor enabled.")
+    else:
+        monitor = None
+        print("Data flow monitor disabled.")
 
     # Initialize data module with monitor
     print("Initializing data module...")
@@ -136,8 +147,11 @@ def main():
         trainer.fit(model, datamodule=data_module, ckpt_path=args.resume)
     finally:
         # 确保监控器正确关闭
-        monitor.close()
-        print("Monitor closed successfully")
+        if monitor is not None:
+            monitor.close()
+            print("Monitor closed successfully")
+        else:
+            print("No monitor to close")
 
 if __name__ == "__main__":
     main()
