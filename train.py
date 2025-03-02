@@ -36,9 +36,9 @@ def parse_args():
     parser.add_argument('--monitor_samples', type=int, default=50,
                         help='Number of samples to monitor per epoch')
     parser.add_argument('--root_dir', type=str, required=True, help='Root directory for dataset (overrides config)')
-    parser.add_argument('--batch_size', type=int, help='Batch size (overrides config)')
-    parser.add_argument('--num_workers', type=int, help='Number of data loader workers (overrides config)')
-    parser.add_argument('--prefetch_factor', type=int, help='Prefetch factor for data loader (overrides config)')
+    parser.add_argument('--batch_size', type=int, required=True, help='Batch size (overrides config)')
+    parser.add_argument('--num_workers', type=int, required=True, help='Number of data loader workers (overrides config)')
+    parser.add_argument('--prefetch_factor', type=int, required=True, help='Prefetch factor for data loader (overrides config)')
 
     return parser.parse_args()
 
