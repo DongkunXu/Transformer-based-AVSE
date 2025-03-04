@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader
 from tabulate import tabulate
 from datetime import datetime
 from alive_progress import alive_bar
+import argparse
 
 from config.config import Config
 from data.data_module import AVSEDataset, custom_collate
@@ -222,10 +223,18 @@ def generate_scene_ids(start_id: str, end_id: str) -> List[str]:
 
 
 def main():
+    # 添加命令行参数解析
+    parser = argparse.ArgumentParser(description="AVSE Model Evaluation")
+    parser.add_argument("--checkpoint", type=str, required=True,
+                        help="Path to the model checkpoint file")
+    parser.add_argument("--data_root", type=str, required=True,
+                        help="Root directory of the dataset")
+    args = parser.parse_args()
+
     # 配置参数
     CONFIG_PATH = "config/avse_base.yaml"
-    CHECKPOINT_PATH = r"E:\School_Work\PhD_1\Transformer-AVSE-V5\checkpoints\run_20250224_020742\checkpoints\last.ckpt"
-    DATA_ROOT = "D:/AVSE_DataSet/Reduse_DATASET"
+    CHECKPOINT_PATH = args.checkpoint  # 使用命令行传入的参数
+    DATA_ROOT = args.data_root        # 使用命令行传入的参数
     START_SCENE_ID = "S00040"
     END_SCENE_ID = "S00050"
 
