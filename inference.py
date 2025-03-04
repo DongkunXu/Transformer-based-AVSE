@@ -240,7 +240,7 @@ def main():
 
     try:
         current_time = datetime.now().strftime("D%Y%m%d_T%H%M")
-        main_output_dir = os.path.join("E:\School_Work\PhD_1\Transformer-AVSE-V5\Test_Output", current_time)
+        main_output_dir = os.path.join("Test_Output", current_time)
         os.makedirs(main_output_dir, exist_ok=True)
 
         evaluator = ModelEvaluator(CONFIG_PATH, CHECKPOINT_PATH, main_output_dir)
