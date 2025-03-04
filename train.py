@@ -111,10 +111,10 @@ def main():
         ModelCheckpoint(
             dirpath=checkpoint_dir,
             filename='avse-{epoch:02d}-{val_loss_total:.4f}',
-            save_top_k=3,
+            save_top_k=1,
             monitor='val_loss',
             mode='min',
-            save_last=True
+            save_last=False
         ),
         LearningRateMonitor(logging_interval='step')
     ]
