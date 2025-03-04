@@ -7,7 +7,7 @@ from utils.STOI import STOILoss
 from utils.monitor import DataFlowMonitor
 from pystoi import stoi  # 需要安装 pystoi
 from pesq import pesq as pesq_func
-
+from utils.volume_perception_loss import volume_perception_loss
 
 def cal_si_snr(source: torch.Tensor, estimate_source: torch.Tensor, eps: float = 1e-4) -> torch.Tensor:
     """计算SI-SNR损失，增加全零和小值检测"""
@@ -240,6 +240,7 @@ class ImprovedAVSELoss(nn.Module):
         noise_loss = noise_energy_loss(pred, target, energy_threshold=0.01, monitor=self.monitor)
         stoi_loss = self.stoi_loss(pred, target)  # 计算 STOI 损失
         hf_loss = high_freq_loss(pred, target, n_fft=1024, hop_length=256, sample_rate=self.sample_rate, monitor=self.monitor)
+        volume_loss = volume_perception_loss(pred, target, monitor=self.monitor)
         # pesq_loss_value = pesq_loss(pred, target, sample_rate=self.sample_rate, monitor=self.monitor)
 
         total_loss = (
@@ -248,7 +249,8 @@ class ImprovedAVSELoss(nn.Module):
             self.config.phase_loss_weight * stft_losses['phase_loss'] +
             self.config.noise_loss_weight * noise_loss +  # 噪声抑制权重
             self.config.perc_loss_weight * stoi_loss +  # 感知损失权重 stoi
-            self.config.highF_loss_weight * hf_loss #高频损失
+            self.config.highF_loss_weight * hf_loss +  #高频损失
+            self.config.volume_loss_weight * volume_loss  # 新增音量损失
             # self.config.pesq_loss_weight * pesq_loss_value  # 新增 PESQ 权重
         )
 
@@ -263,6 +265,7 @@ class ImprovedAVSELoss(nn.Module):
                 'mag_loss': stft_losses['mag_loss'],
                 'phase_loss': stft_losses['phase_loss'],
                 'stoi_loss': stoi_loss,
+                'volume_loss': volume_loss,
             }
         return {'loss': total_loss}
 

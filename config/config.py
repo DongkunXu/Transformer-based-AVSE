@@ -99,6 +99,7 @@ class LossConfig:
     perc_loss_weight : float = 0.1
     highF_loss_weight : float = 0.1
     pesq_loss_weight : float = 0.1
+    volume_loss_weight: float = 0.4
     fft_sizes: List[int] = field(default_factory=lambda: [512])
     hop_sizes: List[int] = field(default_factory=lambda: [128])
     win_lengths: List[int] = field(default_factory=lambda: [512])
